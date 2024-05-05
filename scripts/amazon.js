@@ -48,11 +48,40 @@
                 Added
             </div>
 
-            <button class="add-to-cart-button button-primary">
+            <button class="add-to-cart-button button-primary js-add-to-cart" 
+            data-product-id ="${product.id}">
                 Add to Cart
             </button>
             </div>`
        
  });
- console.log(productsHTML);
+//  console.log(productsHTML);
  document.querySelector('.js-products-grid').innerHTML=productsHTML;
+
+//getting all the list of add to to cart button
+document.querySelectorAll('.js-add-to-cart')
+.forEach((button)=>{
+    button.addEventListener('click',()=>{
+     const productId= button.dataset.productId;
+//let us loop through the cart so the button knows what and how to add to the cart and if the item is already in the cart and what action to do if it is , 
+let matchingItem;
+    cart.forEach((item)=>{
+        if(productId===item.productId){
+            matchingItem=item;
+        }
+    });
+    //we can just write matching here bcz its a truthy item
+    if(matchingItem){
+        matchingItem.quantity+=1
+    }else{
+        cart.push({
+            productId:productId,
+            quantity:1
+         });
+     
+       
+    }
+  
+    console.log(cart); 
+});
+});
