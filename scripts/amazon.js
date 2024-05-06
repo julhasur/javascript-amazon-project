@@ -1,6 +1,8 @@
 
-import {cart} from "../data/cart.js";
+import {cart, addtocart} from "../data/cart.js";
 import { products } from "../data/products.js";
+
+
  let productsHTML='';
  products.forEach((product) => {
     productsHTML+=` <div class="product-cont
@@ -56,36 +58,28 @@ import { products } from "../data/products.js";
             </div>`
        
  });
-//  console.log(productsHTML);
- document.querySelector('.js-products-grid').innerHTML=productsHTML;
 
+
+document.querySelector('.js-products-grid').innerHTML=productsHTML;
+
+ function updateCartQuantity(){
+    let cartQuantity=0;
+    cart.forEach((cartItem)=>{
+     cartQuantity +=cartItem.quantity;
+    });
+
+    document.querySelector('.js-cart-quantity').innerHTML=cartQuantity; 
+
+
+ }
 //getting all the list of add to to cart button
 document.querySelectorAll('.js-add-to-cart')
 .forEach((button)=>{
     button.addEventListener('click',()=>{
      const productId= button.dataset.productId;
-//let us loop through the cart so the button knows what and how to add to the cart and if the item is already in the cart and what action to do if it is , 
-let matchingItem;
-    cart.forEach((item)=>{
-        if(productId===item.productId){
-            matchingItem=item;
-        }
+        addtocart(productId);
+        updateCartQuantity();
+   
     });
-    //we can just write matching here bcz its a truthy item
-    if(matchingItem){
-        matchingItem.quantity+=1
-    }else{
-        cart.push({
-            productId:productId,
-            quantity:1
-         });
-       }
+});
 
-       let cartQuantity=0;
-       cart.forEach((item)=>{
-        cartQuantity +=item.quantity;
-       })
-       document.querySelector('.js-cart-quantity').innerHTML=cartQuantity; 
-  
-});
-});
