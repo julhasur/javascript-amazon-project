@@ -2,7 +2,14 @@ import { cart } from "../data/cart.js";
 import {products} from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
 import { removeFromCart } from "../data/cart.js";
-
+import  dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
+//calling dayjs external js file
+const today=dayjs();
+//date js takes two param 
+const deliveryDate=today.add(7,'days');
+console.log(deliveryDate);
+// use the documentation to show the format 
+console.log(deliveryDate.format('dddd,MMM D'))
 let cartSummeryHTML=''
 cart.forEach((cartItem)=>{ 
     const productId=cartItem.productId;
